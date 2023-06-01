@@ -1,13 +1,30 @@
+/* 先ほど作成した HTTP サーバを改良して、 user-agent ではなく、
+
+<!DOCTYPE html>
+<html lang="ja">
+  <body>
+    <h1>HTMLの一番大きい見出しを表示します</h1>
+  </body>
+</html>
+
+上記の HTML を表示させましょう。
+その際は、レスポンスヘッダのコンテンツタイプを、text/html に変更する必要があります。 */
+
 'use strict';
+
 const http = require('node:http');
-const server = http.createServer((req, res) => {
+const server = http.createServer( (req, res) => {
   res.writeHead(200, {
-    'Content-Type': 'text/plain; charset=utf-8'
+    'Content-Type': 'text/html; charset=utf-8'
   });
-  res.write(req.headers['user-agent']);
+  res.write(
+    '<!DOCTYPE html><html lang="ja"><body><h1>HTMLの一番大きい見出しを表示します</h1></body></html>'
+  );
   res.end();
 });
+
 const port = 8000;
-server.listen(port, () => {
-  console.log(`Listening on ${port}`);
+
+server.listen( port, () => {
+    console.log(`Listening on ${port}`);
 });
